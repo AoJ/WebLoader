@@ -1,6 +1,6 @@
 <?php
 
-namespace WebLoader\Filter;
+namespace Webloader\Filter;
 
 /**
  * Less CSS filter
@@ -35,8 +35,7 @@ class LessFilter
 	 */
 	public function __invoke($code, \WebLoader\Compiler $loader, $file)
 	{
-		if (pathinfo($file, PATHINFO_EXTENSION) === 'less') {
-			$this->getLessC()->importDir = pathinfo($file, PATHINFO_DIRNAME) . '/';
+		if (pathinfo($file, PATHINFO_FILENAME) === "screen") {
 			return $this->getLessC()->parse($code);
 		}
 

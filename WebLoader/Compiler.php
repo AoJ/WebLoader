@@ -17,10 +17,10 @@ class Compiler
 	private $joinFiles = true;
 
 	/** @var array */
-	private $filters = array();
+	public $filters = array();
 
 	/** @var array */
-	private $fileFilters = array();
+	public $fileFilters = array();
 
 	/** @var IFileCollection */
 	private $collection;
@@ -35,23 +35,11 @@ class Compiler
 		$this->setOutputDir($outputDir);
 	}
 
-	/**
-	 * Create compiler with predefined css output naming convention
-	 * @param IFileCollection $files
-	 * @param string $outputDir
-	 * @return Compiler
-	 */
 	public static function createCssCompiler(IFileCollection $files, $outputDir)
 	{
 		return new static($files, DefaultOutputNamingConvention::createCssConvention(), $outputDir);
 	}
 
-	/**
-	 * Create compiler with predefined javascript output naming convention
-	 * @param IFileCollection $files
-	 * @param string $outputDir
-	 * @return Compiler
-	 */
 	public static function createJsCompiler(IFileCollection $files, $outputDir)
 	{
 		return new static($files, DefaultOutputNamingConvention::createJsConvention(), $outputDir);
@@ -72,13 +60,16 @@ class Compiler
 	 */
 	public function setOutputDir($tempPath)
 	{
+		$temp = $tempPath;
+
 		$tempPath = realpath($tempPath);
 
-		if (!is_dir($tempPath)) {
-			throw new FileNotFoundException('Temp path does not exist.');
+		if(!is_dir($tempPath)) { // schmu edit
+			mkdir($temp);
+			$tempPath = realpath($temp);
 		}
 
-		if (!is_writable($tempPath)) {
+		if(!is_writable($tempPath)) {
 			throw new InvalidArgumentException("Directory '$tempPath' is not writeable.");
 		}
 

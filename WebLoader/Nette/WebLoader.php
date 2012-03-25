@@ -22,9 +22,6 @@ abstract class WebLoader extends \Nette\Application\UI\Control
 
 	public function __construct(Compiler $compiler, $tempPath)
 	{
-
-		// hajača
-
 		parent::__construct();
 		$this->compiler = $compiler;
 		$this->tempPath = $tempPath;

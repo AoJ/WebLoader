@@ -2,6 +2,8 @@
 
 namespace WebLoader;
 
+use Nette\Utils\Finder;
+
 /**
  * FileCollection
  *
@@ -21,10 +23,25 @@ class FileCollection implements IFileCollection
 
 	/**
 	 * @param string|null $root files root for relative paths
+	 * @param bool|int include all files from the folder // schmu edit
 	 */
-	public function __construct($root = NULL)
+	public function __construct($root = NULL, $autoload = FALSE)
 	{
 		$this->root = $root;
+
+		// schmu edit
+		if($autoload == 2) { // load files from dir
+			$suffix = pathinfo($root, PATHINFO_FILENAME);
+			foreach(Finder::findFiles("*.".$suffix)->from($this->root) as $key => $file) {
+				$this->addFile($key);
+			}
+		}
+		elseif($autoload) { // load files from dir
+			$suffix = pathinfo($root, PATHINFO_FILENAME);
+			foreach(Finder::findFiles("*.".$suffix)->in($this->root) as $key => $file) {
+				$this->addFile($key);
+			}
+		}
 	}
 
 	/**
@@ -60,7 +77,7 @@ class FileCollection implements IFileCollection
 	 */
 	public function addFile($file)
 	{
-		$file = $this->cannonicalizePath((string) $file);
+		$file = $this->cannonicalizePath($file);
 
 		if (in_array($file, $this->files)) {
 			return;
@@ -72,9 +89,9 @@ class FileCollection implements IFileCollection
 
 	/**
 	 * Add files
-	 * @param array|\Traversable $files array list of files
+	 * @param $files array list of files
 	 */
-	public function addFiles($files)
+	public function addFiles(array $files)
 	{
 		foreach ($files as $file) {
 			$this->addFile($file);
@@ -116,11 +133,7 @@ class FileCollection implements IFileCollection
 		$this->remoteFiles[] = $file;
 	}
 
-	/**
-	 * Add multiple remote files
-	 * @param array|\Traversable $files
-	 */
-	public function addRemoteFiles($files)
+	public function addRemoteFiles(array $files)
 	{
 		foreach ($files as $file) {
 			$this->addRemoteFile($file);

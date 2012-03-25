@@ -20,6 +20,7 @@ class VariablesFilter
 	/** @var array */
 	private $variables;
 
+
 	/**
 	 * Construct
 	 * @param array $variables
@@ -30,6 +31,7 @@ class VariablesFilter
 			$this->$key = $value;
 		}
 	}
+
 
 	/**
 	 * Set delimiter
@@ -43,6 +45,7 @@ class VariablesFilter
 		$this->endVariable = (string)$end;
 		return $this;
 	}
+
 
 	/**
 	 * Invoke filter
