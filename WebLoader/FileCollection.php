@@ -23,20 +23,19 @@ class FileCollection implements IFileCollection
 
 	/**
 	 * @param string|null $root files root for relative paths
-	 * @param bool|int include all files from the folder // schmu edit
+	 * @param bool|int include all files from the folder
 	 */
 	public function __construct($root = NULL, $autoload = FALSE)
 	{
 		$this->root = $root;
 
-		// schmu edit
-		if($autoload == 2) { // load files from dir
+		if ($autoload == 2) { // load files from dir
 			$suffix = pathinfo($root, PATHINFO_FILENAME);
 			foreach(Finder::findFiles("*.".$suffix)->from($this->root) as $key => $file) {
 				$this->addFile($key);
 			}
 		}
-		elseif($autoload) { // load files from dir
+		elseif ($autoload == 1) { // load files from dir
 			$suffix = pathinfo($root, PATHINFO_FILENAME);
 			foreach(Finder::findFiles("*.".$suffix)->in($this->root) as $key => $file) {
 				$this->addFile($key);

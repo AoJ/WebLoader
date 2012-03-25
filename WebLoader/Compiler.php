@@ -35,11 +35,23 @@ class Compiler
 		$this->setOutputDir($outputDir);
 	}
 
+	/**
+	 * Create compiler with predefined css output naming convention
+	 * @param IFileCollection $files
+	 * @param string $outputDir
+	 * @return Compiler
+	 */
 	public static function createCssCompiler(IFileCollection $files, $outputDir)
 	{
 		return new static($files, DefaultOutputNamingConvention::createCssConvention(), $outputDir);
 	}
 
+	/**
+	 * Create compiler with predefined css output naming convention
+	 * @param IFileCollection $files
+	 * @param string $outputDir
+	 * @return Compiler
+	 */
 	public static function createJsCompiler(IFileCollection $files, $outputDir)
 	{
 		return new static($files, DefaultOutputNamingConvention::createJsConvention(), $outputDir);
@@ -64,12 +76,12 @@ class Compiler
 
 		$tempPath = realpath($tempPath);
 
-		if(!is_dir($tempPath)) { // schmu edit
+		if (!is_dir($tempPath)) {
 			mkdir($temp);
 			$tempPath = realpath($temp);
 		}
 
-		if(!is_writable($tempPath)) {
+		if (!is_writable($tempPath)) {
 			throw new InvalidArgumentException("Directory '$tempPath' is not writeable.");
 		}
 
