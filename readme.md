@@ -56,8 +56,8 @@ Set up files to load.
 	]
 
 	js: [
-		jquery-1.7.1.min.js,
-		jquery.nette.js,
+		http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js,
+		http://files.nette.org/108/jquery.nette.js,
 		netteForms.js,
 		bootstrap.min.js,
 		scripts.js

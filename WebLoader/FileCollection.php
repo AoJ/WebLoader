@@ -76,13 +76,22 @@ class FileCollection implements IFileCollection
 	 */
 	public function addFile($file)
 	{
-		$file = $this->cannonicalizePath($file);
+		if (preg_match("/^(http)/", $file)) {
+			if (in_array($file, $this->files)) {
+				return;
+			}
 
-		if (in_array($file, $this->files)) {
-			return;
+			$this->addRemoteFile($file);
 		}
+		else {
+			$file = $this->cannonicalizePath($file);
 
-		$this->files[] = $file;
+			if (in_array($file, $this->files)) {
+				return;
+			}
+
+			$this->files[] = $file;
+		}
 	}
 
 
